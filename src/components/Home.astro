@@ -3,11 +3,11 @@ const { lang } = Astro.props;
 const zh = lang === 'zh';
 const content = zh ? {
   eyebrow: '一间公开的阅读室', hero: '这里放着我不想忘记的东西。', subtitle: '写作 · AI · 学习 · 开源 · 生活留下的痕迹', heading: '四扇门', index: 'FOUR DOORS',
-  cards: [['01', 'Plot Ark', '个人项目——一个仍在生长的作品页面。这里留给问题、草图和后来发生的事。', '/zh/works/', 'window'], ['02', 'career-ops', '开源贡献——一个求职自动化工具，我不是原作者，但七十多个被合并的 PR 里有我的手笔。', '/zh/works/', 'vase'], ['03', '写作', '小说、散文和不必立刻证明用途的文字。中文原作优先。', '/zh/writing/', 'book'], ['04', '案件与猫', '案件笔记与生活痕迹有各自的门；公开内容会谨慎删节。', '/zh/notes/', 'flower']],
+  cards: [['01', 'Plot Ark', '个人项目——一个仍在生长的作品页面。这里留给问题、草图和后来发生的事。', '/zh/works/', 'window'], ['02', 'career-ops', '开源贡献——一个求职自动化工具，我不是原作者，但七十多个被合并的 PR 里有我的手笔。', '/zh/works/career-ops/', 'vase'], ['03', '写作', '小说、散文和不必立刻证明用途的文字。中文原作优先。', '/zh/writing/', 'book'], ['04', '案件与猫', '案件笔记与生活痕迹有各自的门；公开内容会谨慎删节。', '/zh/notes/', 'flower']],
   note: '这里不是人生的完整备份，也不是履历的陈列柜。它是一张桌面：我选择留在上面的、仍然会发光的小事。'
 } : {
   eyebrow: 'A public reading room', hero: 'Here are the things I do not want to forget.', subtitle: 'writing · AI · learning · open source · traces of a life', heading: 'Four doors', index: 'FOUR DOORS',
-  cards: [['01', 'Plot Ark', "A personal project — a work still becoming. A place for questions, drafts, and what follows.", '/en/works/', 'window'], ['02', 'career-ops', "Open-source contribution — a job-search automation tool I didn't start, but with more than seventy of my own merged pull requests in it.", '/en/works/', 'vase'], ['03', 'Fiction', 'Fiction, essays, and words that need not justify themselves at once. Chinese originals come first.', '/en/writing/', 'book'], ['04', 'Case Notes & Cats', 'Case notes and traces of everyday life have separate doors. Public notes are carefully redacted.', '/en/notes/', 'flower']],
+  cards: [['01', 'Plot Ark', "A personal project — a work still becoming. A place for questions, drafts, and what follows.", '/en/works/', 'window'], ['02', 'career-ops', "Open-source contribution — a job-search automation tool I didn't start, but with more than seventy of my own merged pull requests in it.", '/en/works/career-ops/', 'vase'], ['03', 'Fiction', 'Fiction, essays, and words that need not justify themselves at once. Chinese originals come first.', '/en/writing/', 'book'], ['04', 'Case Notes & Cats', 'Case notes and traces of everyday life have separate doors. Public notes are carefully redacted.', '/en/notes/', 'flower']],
   note: 'This is neither a complete archive of a life nor a cabinet of credentials. It is a desk: small things I have chosen to leave in the light.'
 };
 ---
