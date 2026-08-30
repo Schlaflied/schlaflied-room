@@ -1,0 +1,38 @@
+---
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+const content = zh ? {
+  eyebrow: '一间公开的阅读室', hero: '这里放着我不想忘记的东西。', subtitle: '写作 · AI · 学习 · 开源 · 生活留下的痕迹',
+  heading: '桌面上的东西', index: 'SELECTED THINGS',
+  cards: [
+    ['01', 'Plot Ark', '一个仍在生长的作品页面。这里留给问题、草图和后来发生的事。', '/zh/works/'],
+    ['02', 'ClearCover', '一个名字，一条还在被慢慢厘清的线。项目页会在内容准备好后开放。', '/zh/works/'],
+    ['03', '写作', '小说、散文和不必立刻证明用途的文字。中文原作优先。', '/zh/writing/'],
+    ['04', '案件与猫', '案件笔记与生活痕迹有各自的门；公开内容会谨慎删节。', '/zh/notes/']
+  ],
+  note: '这里不是人生的完整备份，也不是履历的陈列柜。它是一张桌面：我选择留在上面的、仍然会发光的小事。'
+} : {
+  eyebrow: 'A public reading room', hero: 'Here are the things I do not want to forget.', subtitle: 'writing · AI · learning · open source · traces of a life',
+  heading: 'On the desk', index: 'SELECTED THINGS',
+  cards: [
+    ['01', 'Plot Ark', 'A work still becoming. A place for questions, drafts, and what follows.', '/en/works/'],
+    ['02', 'ClearCover', 'A name, and a thread still being carefully understood. The project page opens when ready.', '/en/works/'],
+    ['03', 'Fiction', 'Fiction, essays, and words that need not justify themselves at once. Chinese originals come first.', '/en/writing/'],
+    ['04', 'Case Notes & Cats', 'Case notes and traces of everyday life have separate doors. Public notes are carefully redacted.', '/en/notes/']
+  ],
+  note: 'This is neither a complete archive of a life nor a cabinet of credentials. It is a desk: small things I have chosen to leave in the light.'
+};
+---
+<section class="hero">
+  <div class="eyebrow">{content.eyebrow}</div>
+  <h1>{content.hero}<span class="star">✦</span></h1>
+  <div class="rule"></div>
+  <p class="subtitle">{content.subtitle}</p>
+</section>
+<section aria-labelledby="things">
+  <div class="section-heading"><h2 id="things">{content.heading}</h2><span>{content.index}</span></div>
+  <div class="grid">
+    {content.cards.map(([number, title, description, href]) => <a class="card" href={href}><div><div class="number">{number}</div><h3>{title}</h3><p>{description}</p></div><span class="arrow" aria-hidden="true">→</span></a>)}
+  </div>
+</section>
+<aside class="note">{content.note}</aside>
