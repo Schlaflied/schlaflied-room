@@ -25,35 +25,33 @@ const closeLabel = zh ? '关闭' : 'Close';
   .cat-thumb { padding:0; border:1px solid var(--line); background:none; cursor:zoom-in; aspect-ratio:1; overflow:hidden; }
   .cat-thumb img { width:100%; height:100%; object-fit:cover; display:block; transition:transform .3s ease; }
   .cat-thumb:hover img { transform:scale(1.04); }
-  .cat-lightbox { position:fixed; inset:0; z-index:20; background:rgb(10 14 24 / .86); display:flex; align-items:center; justify-content:center; padding:5vh 4vw; }
+  .cat-lightbox { position:fixed; inset:0; z-index:20; background:rgb(10 14 24 / .86); align-items:center; justify-content:center; padding:5vh 4vw; }
+  .cat-lightbox:not([hidden]) { display:flex; }
   .cat-lightbox img { max-width:100%; max-height:100%; box-shadow:0 12px 40px rgb(0 0 0 / .4); }
   .cat-close { position:absolute; top:18px; right:22px; background:none; border:1px solid rgb(244 234 217 / .5); color:#f4ead9; width:38px; height:38px; border-radius:999px; font-size:1.4rem; line-height:1; cursor:pointer; }
   @media (prefers-reduced-motion:reduce) { .cat-thumb img { transition:none; } }
 </style>
 
-<script>
-  (() => {
-    const root = document;
-    root.addEventListener('click', (event) => {
-      const target = event.target as HTMLElement;
-      const openBtn = target.closest('[data-cat-open]') as HTMLElement | null;
-      if (openBtn) {
-        const album = openBtn.closest('.cat-album');
-        const box = album?.querySelector('[data-cat-lightbox]') as HTMLElement | null;
-        const img = album?.querySelector('[data-cat-lightbox-img]') as HTMLImageElement | null;
-        if (box && img) { img.src = openBtn.dataset.src || ''; box.hidden = false; }
-        return;
-      }
-      const closeBtn = target.closest('[data-cat-close]');
-      const lightbox = target.closest('[data-cat-lightbox]');
-      if (closeBtn || target === lightbox) {
-        const box = target.closest('.cat-album')?.querySelector('[data-cat-lightbox]') as HTMLElement | null;
-        if (box) box.hidden = true;
-      }
-    });
-    root.addEventListener('keydown', (event) => {
-      if (event.key !== 'Escape') return;
-      document.querySelectorAll('[data-cat-lightbox]').forEach((box) => { (box as HTMLElement).hidden = true; });
-    });
-  })();
+<script is:inline>
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    var openBtn = target.closest('[data-cat-open]');
+    if (openBtn) {
+      var album = openBtn.closest('.cat-album');
+      var box = album && album.querySelector('[data-cat-lightbox]');
+      var img = album && album.querySelector('[data-cat-lightbox-img]');
+      if (box && img) { img.src = openBtn.getAttribute('data-src') || ''; box.hidden = false; }
+      return;
+    }
+    var closeBtn = target.closest('[data-cat-close]');
+    var lightbox = target.closest('.cat-lightbox');
+    if (closeBtn || target.hasAttribute('data-cat-lightbox')) {
+      var openLightbox = target.closest('.cat-album') && target.closest('.cat-album').querySelector('[data-cat-lightbox]');
+      if (openLightbox) openLightbox.hidden = true;
+    }
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('[data-cat-lightbox]').forEach(function (box) { box.hidden = true; });
+  });
 </script>
