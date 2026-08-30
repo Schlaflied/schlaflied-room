@@ -1,0 +1,28 @@
+---
+interface Props { lang: 'zh' | 'en'; }
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+---
+<span class="contact-row">
+  <a href="https://github.com/Schlaflied" target="_blank" rel="noopener">GitHub</a>
+  <a href="mailto:200203syttt@gmail.com">Email</a>
+  <span class="wechat-widget">
+    <button type="button" class="wechat-toggle" data-wechat-toggle>{zh ? '微信' : 'WeChat'}</button>
+    <span class="wechat-pop" data-wechat-pop hidden>
+      <button type="button" class="wechat-close" data-wechat-close aria-label={zh ? '关闭' : 'Close'}>&times;</button>
+      <img src="/images/contact/wechat-qr.jpg" alt="WeChat QR code" />
+    </span>
+  </span>
+</span>
+
+<style>
+  .contact-row { display:inline-flex; gap:18px; align-items:center; font-family:ui-sans-serif,system-ui,sans-serif; letter-spacing:.03em; font-size:.86rem; }
+  .contact-row a { color:var(--muted); }
+  .contact-row a:hover { color:var(--rose); }
+  .wechat-widget { position:relative; display:inline-block; }
+  .wechat-toggle { appearance:none; background:none; border:0; padding:0; color:var(--muted); font:inherit; letter-spacing:inherit; cursor:pointer; }
+  .wechat-toggle:hover { color:var(--rose); }
+  .wechat-pop { position:absolute; left:0; top:calc(100% + 10px); background:var(--paper); border:1px solid var(--line); padding:14px; box-shadow:0 10px 30px rgb(0 0 0 / .18); z-index:5; }
+  .wechat-pop img { display:block; width:180px; height:180px; }
+  .wechat-close { position:absolute; top:4px; right:6px; appearance:none; background:none; border:0; color:var(--muted); font-size:1.1rem; line-height:1; cursor:pointer; }
+</style>
