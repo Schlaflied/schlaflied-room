@@ -1,0 +1,9 @@
+---
+import Base from '../../layouts/Base.astro';
+const updated = '2026-08-30';
+---
+<Base lang="en" title="Now"><article class="prose"><div class="now-head"><p class="label">Now</p><span class="now-updated">Last updated · {updated}</span></div><h1>Mostly writing code, writing words, and job hunting right now.</h1><p>The career-ops thread is still active — sending PRs to this open-source job-search tool, from scoring logic to edge cases, fixing what needs fixing. Plot Ark moves forward in fits and starts; no rush to tell its whole story yet. This site itself is one of the things still being filled in — the doors are open, content is moving in gradually. The writing hasn't stopped either; the English pages are catching up slowly.</p><p class="now-note">This page updates irregularly. The date is the proof it hasn't gone stale.</p></article></Base>
+
+<style>
+  .now-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:8px; } .now-updated { font:.72rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.04em; } .now-note { color:var(--muted); font-size:.88rem; }
+</style>

@@ -4,9 +4,9 @@ interface Props { lang: 'zh' | 'en'; title?: string; description?: string; }
 const { lang, title = 'Schlaflied', description = 'A room for things worth remembering.' } = Astro.props;
 const isZh = lang === 'zh';
 const copy = isZh ? {
-  byline: 'Syna 的一间房', nav: [['首页', `/${lang}/`], ['作品', `/${lang}/works/`], ['写作', `/${lang}/writing/`], ['随记', `/${lang}/notes/`], ['关于', `/${lang}/about/`]], theme: '切换亮暗主题', menu: '打开菜单', language: '切换到 English'
+  byline: 'Syna 的一间房', nav: [['首页', `/${lang}/`], ['作品', `/${lang}/works/`], ['写作', `/${lang}/writing/`], ['随记', `/${lang}/notes/`], ['关于', `/${lang}/about/`], ['现在', `/${lang}/now/`]], theme: '切换亮暗主题', menu: '打开菜单', language: '切换到 English'
 } : {
-  byline: 'a room by Syna', nav: [['home', `/${lang}/`], ['works', `/${lang}/works/`], ['writing', `/${lang}/writing/`], ['notes', `/${lang}/notes/`], ['about', `/${lang}/about/`]], theme: 'Change colour theme', menu: 'Open menu', language: 'Switch to Chinese'
+  byline: 'a room by Syna', nav: [['home', `/${lang}/`], ['works', `/${lang}/works/`], ['writing', `/${lang}/writing/`], ['notes', `/${lang}/notes/`], ['about', `/${lang}/about/`], ['now', `/${lang}/now/`]], theme: 'Change colour theme', menu: 'Open menu', language: 'Switch to Chinese'
 };
 const other = isZh ? 'en' : 'zh';
 const rest = Astro.url.pathname.replace(new RegExp(`^/${lang}(?=/|$)`), '') || '/';
