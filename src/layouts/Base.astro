@@ -31,7 +31,34 @@ const otherHref = `/${other}${rest}`;
     </header>
     <main id="content"><slot /></main>
     <div class="scroll-thread" aria-hidden="true"><span class="scroll-thread-fill"></span></div>
-    <footer><span>Schlaflied</span><span>—</span><span>{isZh ? '给还在生长的东西留一盏灯。' : 'A small light for things still growing.'}</span></footer>
+    <footer>
+      <div class="footer-brand"><span>Schlaflied</span><span>—</span><span>{isZh ? '给还在生长的东西留一盏灯。' : 'A small light for things still growing.'}</span></div>
+      <div class="footer-contact">
+        <a href="https://github.com/Schlaflied" target="_blank" rel="noopener">GitHub</a>
+        <a href="mailto:200203syttt@gmail.com">Email</a>
+        <button type="button" class="wechat-toggle" data-wechat-toggle>{isZh ? '微信' : 'WeChat'}</button>
+      </div>
+      <div class="wechat-pop" data-wechat-pop hidden>
+        <button type="button" class="wechat-close" data-wechat-close aria-label={isZh ? '关闭' : 'Close'}>&times;</button>
+        <img src="/images/contact/wechat-qr.jpg" alt="WeChat QR code" />
+      </div>
+    </footer>
+    <script is:inline>
+      (() => {
+        document.addEventListener('click', (event) => {
+          const toggle = event.target.closest('[data-wechat-toggle]');
+          const pop = document.querySelector('[data-wechat-pop]');
+          if (toggle && pop) { pop.hidden = !pop.hidden; return; }
+          const closeBtn = event.target.closest('[data-wechat-close]');
+          if ((closeBtn || (pop && !pop.hidden && !pop.contains(event.target) && !toggle)) && pop) pop.hidden = true;
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key !== 'Escape') return;
+          const pop = document.querySelector('[data-wechat-pop]');
+          if (pop) pop.hidden = true;
+        });
+      })();
+    </script>
     <script is:inline>
       (() => {
         if (window.__schlafliedRoom) return; window.__schlafliedRoom = true;
@@ -79,7 +106,7 @@ const otherHref = `/${other}${rest}`;
   a { color:inherit; text-decoration:none; } .skip { position:absolute; left:-999px; } .skip:focus { left:1rem; top:1rem; background:var(--ink); color:var(--paper); padding:.5rem; z-index:3; }
   .site-header { max-width:1230px; margin:auto; padding:26px 34px 18px; display:grid; grid-template-columns:1fr auto; align-items:start; border-bottom:1px solid var(--line); } .wordmark { font-size:1.15rem; letter-spacing:.02em; display:grid; justify-self:start; line-height:1.15; } .wordmark small { color:var(--muted); font-size:.7rem; font-style:italic; letter-spacing:.03em; margin-top:4px; }
   .header-actions { display:flex; gap:11px; align-items:center; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.76rem; letter-spacing:.04em; } .language { border-bottom:1px solid var(--rose); padding:3px 0; } .language b { color:var(--rose); font-weight:700; } button { appearance:none; background:transparent; color:var(--ink); border:1px solid var(--line); cursor:pointer; font:inherit; } .theme-toggle { border-radius:999px; padding:3px 8px; display:flex; gap:8px; } :root[data-theme='light'] .theme-toggle span:last-child, :root[data-theme='dark'] .theme-toggle span:first-child { opacity:.35; }
-  .menu-toggle { display:none; padding:3px 7px; } nav { grid-column:1/-1; display:flex; gap:25px; margin-top:21px; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; } nav a { color:var(--muted); } nav a:hover { color:var(--rose); } main { max-width:1230px; margin:auto; padding:0 34px; min-height:70vh; position:relative; } footer { max-width:1230px; margin:80px auto 0; padding:20px 34px 35px; border-top:1px solid var(--line); color:var(--muted); display:flex; gap:10px; font-size:.78rem; }
+  .menu-toggle { display:none; padding:3px 7px; } nav { grid-column:1/-1; display:flex; gap:25px; margin-top:21px; font-family:ui-sans-serif,system-ui,sans-serif; font-size:.78rem; letter-spacing:.05em; text-transform:uppercase; } nav a { color:var(--muted); } nav a:hover { color:var(--rose); } main { max-width:1230px; margin:auto; padding:0 34px; min-height:70vh; position:relative; } footer { position:relative; max-width:1230px; margin:80px auto 0; padding:20px 34px 35px; border-top:1px solid var(--line); color:var(--muted); display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:10px; font-size:.78rem; } .footer-brand span { margin-right:8px; } .footer-contact { display:flex; gap:18px; align-items:center; font-family:ui-sans-serif,system-ui,sans-serif; letter-spacing:.03em; } .footer-contact a { color:var(--muted); } .footer-contact a:hover { color:var(--rose); } .wechat-toggle { appearance:none; background:none; border:0; padding:0; color:var(--muted); font:inherit; letter-spacing:inherit; cursor:pointer; } .wechat-toggle:hover { color:var(--rose); } .wechat-pop { position:absolute; right:34px; bottom:calc(100% + 10px); background:var(--paper); border:1px solid var(--line); padding:14px; box-shadow:0 10px 30px rgb(0 0 0 / .18); } .wechat-pop img { display:block; width:180px; height:180px; } .wechat-close { position:absolute; top:4px; right:6px; appearance:none; background:none; border:0; color:var(--muted); font-size:1.1rem; line-height:1; cursor:pointer; }
   .hero { padding:clamp(74px,11vw,140px) 0 clamp(56px,8vw,100px); max-width:850px; } .eyebrow { font-family:ui-sans-serif,system-ui,sans-serif; color:var(--rose); letter-spacing:.14em; font-size:.72rem; text-transform:uppercase; } h1 { font-size:clamp(2.7rem,7.2vw,6.3rem); line-height:1.1; letter-spacing:-.06em; font-weight:500; margin:15px 0 22px; } .subtitle { color:var(--muted); font-size:clamp(.95rem,1.7vw,1.2rem); } .star { color:var(--rose); font-size:1.4rem; margin-left:.15em; vertical-align:top; transition:color .45s ease,text-shadow .45s ease; } .rule { width:68px; height:2px; background:var(--rose); margin:26px 0; transition:box-shadow .45s ease; }
   :root[data-theme='dark'] .star,:root[data-theme='dark'] .note-star { text-shadow:0 0 9px rgb(224 179 110 / .55); } :root[data-theme='dark'] .rule { box-shadow:0 0 7px rgb(224 179 110 / .4); }
   .section-heading { display:flex; align-items:baseline; justify-content:space-between; border-bottom:1px solid var(--line); padding-bottom:12px; margin:20px 0 22px; } h2 { font-size:1.5rem; font-weight:500; letter-spacing:-.03em; margin:0; } .section-heading span { font:.7rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.07em; } .section-heading.reveal { border-color:transparent; position:relative; } .section-heading.reveal::after { content:''; position:absolute; left:0; right:0; bottom:-1px; height:1px; background:var(--line); transform:scaleX(0); transform-origin:left; } .section-heading.reveal.is-visible::after { transform:scaleX(1); transition:transform .75s ease .12s; }
