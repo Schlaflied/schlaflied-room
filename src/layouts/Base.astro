@@ -34,7 +34,7 @@ const other = isZh ? 'en' : 'zh';
         <span>Schlaflied</span><small>{copy.byline}</small>
       </a>
       <div class="header-actions">
-        <a class="language" href={`/${other}/`} aria-label={copy.language}>{isZh ? '中文 / <b>EN</b>' : '<b>中文</b> / EN'}</a>
+        <a class="language" href={`/${other}/`} aria-label={copy.language}>{isZh ? <><span>中文 / </span><b>EN</b></> : <><b>中文</b><span> / EN</span></>}</a>
         <button class="theme-toggle" type="button" aria-label={copy.theme} title={copy.theme}><span aria-hidden="true">☼</span><span aria-hidden="true">☾</span></button>
         <button class="menu-toggle" type="button" aria-label={copy.menu} aria-expanded="false">☰</button>
       </div>
