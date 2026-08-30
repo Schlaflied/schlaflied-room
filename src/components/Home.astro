@@ -2,37 +2,35 @@
 const { lang } = Astro.props;
 const zh = lang === 'zh';
 const content = zh ? {
-  eyebrow: '一间公开的阅读室', hero: '这里放着我不想忘记的东西。', subtitle: '写作 · AI · 学习 · 开源 · 生活留下的痕迹',
-  heading: '桌面上的东西', index: 'SELECTED THINGS',
-  cards: [
-    ['01', 'Plot Ark', '一个仍在生长的作品页面。这里留给问题、草图和后来发生的事。', '/zh/works/'],
-    ['02', 'ClearCover', '一个名字，一条还在被慢慢厘清的线。项目页会在内容准备好后开放。', '/zh/works/'],
-    ['03', '写作', '小说、散文和不必立刻证明用途的文字。中文原作优先。', '/zh/writing/'],
-    ['04', '案件与猫', '案件笔记与生活痕迹有各自的门；公开内容会谨慎删节。', '/zh/notes/']
-  ],
+  eyebrow: '一间公开的阅读室', hero: '这里放着我不想忘记的东西。', subtitle: '写作 · AI · 学习 · 开源 · 生活留下的痕迹', heading: '四扇门', index: 'FOUR DOORS',
+  cards: [['01', 'Plot Ark', '一个仍在生长的作品页面。这里留给问题、草图和后来发生的事。', '/zh/works/', 'window'], ['02', 'ClearCover', '一个名字，一条还在被慢慢厘清的线。项目页会在内容准备好后开放。', '/zh/works/', 'vase'], ['03', '写作', '小说、散文和不必立刻证明用途的文字。中文原作优先。', '/zh/writing/', 'book'], ['04', '案件与猫', '案件笔记与生活痕迹有各自的门；公开内容会谨慎删节。', '/zh/notes/', 'flower']],
   note: '这里不是人生的完整备份，也不是履历的陈列柜。它是一张桌面：我选择留在上面的、仍然会发光的小事。'
 } : {
-  eyebrow: 'A public reading room', hero: 'Here are the things I do not want to forget.', subtitle: 'writing · AI · learning · open source · traces of a life',
-  heading: 'On the desk', index: 'SELECTED THINGS',
-  cards: [
-    ['01', 'Plot Ark', 'A work still becoming. A place for questions, drafts, and what follows.', '/en/works/'],
-    ['02', 'ClearCover', 'A name, and a thread still being carefully understood. The project page opens when ready.', '/en/works/'],
-    ['03', 'Fiction', 'Fiction, essays, and words that need not justify themselves at once. Chinese originals come first.', '/en/writing/'],
-    ['04', 'Case Notes & Cats', 'Case notes and traces of everyday life have separate doors. Public notes are carefully redacted.', '/en/notes/']
-  ],
+  eyebrow: 'A public reading room', hero: 'Here are the things I do not want to forget.', subtitle: 'writing · AI · learning · open source · traces of a life', heading: 'Four doors', index: 'FOUR DOORS',
+  cards: [['01', 'Plot Ark', 'A work still becoming. A place for questions, drafts, and what follows.', '/en/works/', 'window'], ['02', 'ClearCover', 'A name, and a thread still being carefully understood. The project page opens when ready.', '/en/works/', 'vase'], ['03', 'Fiction', 'Fiction, essays, and words that need not justify themselves at once. Chinese originals come first.', '/en/writing/', 'book'], ['04', 'Case Notes & Cats', 'Case notes and traces of everyday life have separate doors. Public notes are carefully redacted.', '/en/notes/', 'flower']],
   note: 'This is neither a complete archive of a life nor a cabinet of credentials. It is a desk: small things I have chosen to leave in the light.'
 };
 ---
-<section class="hero">
-  <div class="eyebrow">{content.eyebrow}</div>
-  <h1>{content.hero}<span class="star">✦</span></h1>
-  <div class="rule"></div>
-  <p class="subtitle">{content.subtitle}</p>
-</section>
-<section aria-labelledby="things">
+<section class="hero reveal"><div class="eyebrow">{content.eyebrow}</div><h1>{content.hero}<span class="star">✦</span></h1><div class="rule"></div><p class="subtitle">{content.subtitle}</p></section>
+<section class="doors-section" aria-labelledby="things">
   <div class="section-heading"><h2 id="things">{content.heading}</h2><span>{content.index}</span></div>
-  <div class="grid">
-    {content.cards.map(([number, title, description, href]) => <a class="card" href={href}><div><div class="number">{number}</div><h3>{title}</h3><p>{description}</p></div><span class="arrow" aria-hidden="true">→</span></a>)}
+  <div class="doors">
+    {content.cards.map(([number, title, description, href, icon], index) => <a class="door reveal" style={`--delay:${index * 90}ms`} href={href}>
+      <div class="door-top"><span class="number">{number}</span><svg class="door-icon" viewBox="0 0 120 108" aria-hidden="true">
+        {icon === 'window' && <><path d="M24 94V45a36 36 0 0 1 72 0v49M24 57h72M60 10v84M42 21v73M78 21v73"/><path d="M16 94h88"/></>}
+        {icon === 'vase' && <><path d="M51 25h18l-3 20c-1 7 13 13 13 30 0 13-9 19-19 19s-19-6-19-19c0-17 14-23 13-30l-3-20Z"/><path d="M60 25c-1-13 6-18 12-20M60 27C51 15 42 19 38 9M57 31c-13 2-19-7-25-3"/></>}
+        {icon === 'book' && <><path d="M15 25c18-7 30-2 45 8v57c-15-10-27-15-45-8V25ZM105 25c-18-7-30-2-45 8v57c15-10 27-15 45-8V25Z"/><path d="M60 33v57M24 41c11-2 20 0 28 5M96 41c-11-2-20 0-28 5"/></>}
+        {icon === 'flower' && <><path d="M60 94V52M60 65c-12-4-20-2-27 5M60 72c12-5 20-3 27 4"/><path d="M60 49c-11 0-20-8-20-19 0-7 5-12 11-11 1-7 16-7 18 0 7-1 11 4 11 11 0 11-9 19-20 19Z"/><path d="M60 14v34M45 30h30M49 19l22 22M71 19 49 41"/></>}
+      </svg></div><div class="door-copy"><h3>{title}</h3><p>{description}</p></div><span class="arrow" aria-hidden="true">→</span>
+    </a>)}
   </div>
 </section>
-<aside class="note">{content.note}</aside>
+<aside class="note reveal">{content.note}</aside>
+
+<style>
+  .doors-section { padding-bottom:10px; } .doors { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  .door { min-height:390px; border:1px solid var(--line); padding:20px 18px 16px; display:flex; flex-direction:column; background:color-mix(in srgb,var(--paper) 90%,var(--paper-deep)); transition:transform .22s ease,border-color .22s ease,background-color .28s ease; transition-delay:var(--delay); } .door:hover { transform:translateY(-2px); border-color:var(--rose); }
+  .door-top { display:flex; flex-direction:column; align-items:flex-start; gap:22px; } .number { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); } .door-icon { width:100%; height:112px; fill:none; stroke:var(--amber); stroke-width:1.15; stroke-linecap:round; stroke-linejoin:round; }
+  .door-copy { margin-top:auto; } .door h3 { font-size:1.42rem; line-height:1.15; font-weight:500; margin:0 0 9px; } .door p { color:var(--muted); margin:0; font-size:.88rem; line-height:1.65; } .arrow { align-self:flex-end; margin-top:18px; color:var(--rose); font-size:1.3rem; transition:transform .22s ease; } .door:hover .arrow { transform:translateX(5px); }
+  @media (max-width:960px) { .doors { grid-template-columns:repeat(2,minmax(0,1fr)); } .door { min-height:340px; } } @media (max-width:560px) { .doors { grid-template-columns:1fr; } .door { min-height:310px; } } @media (prefers-reduced-motion:reduce) { .door { transition:none; } }
+</style>
