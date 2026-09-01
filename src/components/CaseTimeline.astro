@@ -31,10 +31,18 @@ const cases: CaseData[] = zh ? [
     tracks: [
       { label: 'CRA 身份裁定', nodes: [
         { time: '2026年6月底', title: '递交裁定申请', desc: '就用工身份误分类问题向 CRA 申请正式裁定。', status: 'done' },
-        { time: '2026年8月底', title: '裁定结果', desc: 'CRA 裁定为雇员身份，此线完结。', status: 'done' },
+        { time: '2026年8月中', title: '裁定结果', desc: 'CRA 裁定为雇员身份，此线完结。', status: 'done' },
+      ]},
+      { label: '裁定后的维权行动', nodes: [
+        { time: '同期', title: '书面回应与立场声明', desc: '就对方提出的新条件书面回应并明确拒绝，准备正式立场声明。', status: 'done' },
+        { time: '同期', title: '确定整体策略', desc: '不再私下和解，转为全部通过官方渠道处理。', status: 'done' },
+        { time: '同期', title: '提交劳工监管投诉', desc: '向劳工相关监管机构正式提交申诉材料。', status: 'done' },
+        { time: '同期', title: '提交多项监管机构投诉', desc: '同步向其他相关监管机构提交投诉材料。', status: 'done' },
+        { time: '同期', title: '向 CRA 补充材料', desc: '补充提交与身份认定相关的材料。', status: 'done' },
       ]},
       { label: 'Small Claims 索赔', nodes: [
-        { time: '2026年8月底', title: '提交索赔', desc: '向法院提交小额索赔申请。', status: 'open' },
+        { time: '2026年8月底', title: '提交索赔', desc: '正式向法院提交小额索赔申请。', status: 'done' },
+        { time: '同期', title: '等待审理', desc: '案件进入等待审理阶段。', status: 'open' },
       ]},
     ],
   },
@@ -63,10 +71,18 @@ const cases: CaseData[] = zh ? [
     tracks: [
       { label: 'CRA ruling', nodes: [
         { time: 'Late Jun 2026', title: 'Ruling request filed', desc: 'Requested a formal CRA ruling on worker status.', status: 'done' },
-        { time: 'Late Aug 2026', title: 'Ruling issued', desc: 'CRA ruled employee status; this track closed.', status: 'done' },
+        { time: 'Mid Aug 2026', title: 'Ruling issued', desc: 'CRA ruled employee status; this track closed.', status: 'done' },
+      ]},
+      { label: 'Follow-up action', nodes: [
+        { time: 'Same period', title: 'Written response & position statement', desc: 'Responded in writing to new terms the other side proposed, declined them, and prepared a formal position statement.', status: 'done' },
+        { time: 'Same period', title: 'Set overall strategy', desc: 'Stopped pursuing a private settlement; moved everything through official channels.', status: 'done' },
+        { time: 'Same period', title: 'Filed a labour standards complaint', desc: 'Formally filed a complaint with the relevant labour standards regulator.', status: 'done' },
+        { time: 'Same period', title: 'Filed complaints with other regulators', desc: 'Filed complaint materials with several other relevant regulators in parallel.', status: 'done' },
+        { time: 'Same period', title: 'Supplementary materials to CRA', desc: 'Submitted additional materials related to the worker-status determination.', status: 'done' },
       ]},
       { label: 'Small Claims', nodes: [
-        { time: 'Late Aug 2026', title: 'Claim filed', desc: 'Filed a small claims court claim.', status: 'open' },
+        { time: 'Late Aug 2026', title: 'Claim filed', desc: 'Formally filed a small claims court claim.', status: 'done' },
+        { time: 'Same period', title: 'Awaiting hearing', desc: 'Case is now waiting to be heard.', status: 'open' },
       ]},
     ],
   },
