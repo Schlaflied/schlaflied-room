@@ -72,38 +72,51 @@ const cases: CaseData[] = zh ? [
   },
 ];
 ---
-<div class="case-timeline">
-  {cases.map((c) => (
-    <div class="ct-case">
-      <p class="ct-label">{c.label}</p>
-      <h3 class="ct-title">{c.title}</h3>
-      {c.tracks.map((track) => (
-        <div class="ct-track">
-          {track.label && <p class="ct-track-label">{track.label}</p>}
-          <div class="ct-nodes">
-            {track.nodes.map((n) => (
-              <div class="ct-node">
-                <span class={`ct-dot ${n.status}`}></span>
-                <div class="ct-node-body">
-                  <p class="ct-time">{n.time}</p>
-                  <p class="ct-node-title">{n.title}</p>
-                  <p class="ct-desc">{n.desc}</p>
+<div class="ep-layout case-ep-layout">
+  <div class="ep-tabs">
+    {cases.map((c, i) => (
+      <button type="button" class={`ep-tab${i === 0 ? ' active' : ''}`} data-ep={i}>{c.label} · {c.title}</button>
+    ))}
+  </div>
+  <div class="ep-panels">
+    {cases.map((c, i) => (
+      <div class={`ep-panel${i === 0 ? ' active' : ''}`} data-ep={i}>
+        <p class="ct-label">{c.label}</p>
+        <h2 class="ep-title">{c.title}</h2>
+        {c.tracks.map((track) => (
+          <div class="ct-track">
+            {track.label && <p class="ct-track-label">{track.label}</p>}
+            <div class="ct-nodes">
+              {track.nodes.map((n) => (
+                <div class="ct-node">
+                  <span class={`ct-dot ${n.status}`}></span>
+                  <div class="ct-node-body">
+                    <p class="ct-time">{n.time}</p>
+                    <p class="ct-node-title">{n.title}</p>
+                    <p class="ct-desc">{n.desc}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
-    </div>
-  ))}
+        ))}
+      </div>
+    ))}
+  </div>
 </div>
 
 <style>
-  .case-timeline { margin-top:24px; }
-  .ct-case { margin-bottom:44px; padding-bottom:44px; border-bottom:1px dashed var(--line); }
-  .ct-case:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+  .case-ep-layout { margin-top:24px; display:grid; grid-template-columns:230px 1fr; gap:36px; align-items:start; }
+  .case-ep-layout .ep-tabs { display:flex; flex-direction:column; position:sticky; top:24px; }
+  .case-ep-layout .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
+  .case-ep-layout .ep-tab:hover { color:var(--ink); }
+  .case-ep-layout .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
+  .case-ep-layout .ep-panels { min-width:0; }
+  .case-ep-layout .ep-panel { display:none; }
+  .case-ep-layout .ep-panel.active { display:block; }
+  .case-ep-layout .ep-title { margin:8px 0 20px; font-size:clamp(1.5rem,3vw,2.1rem); line-height:1.25; font-weight:500; }
+  .case-ep-layout .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
   .ct-label { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); letter-spacing:.06em; text-transform:uppercase; margin:0; }
-  .ct-title { font-size:1.3rem; font-weight:500; margin:8px 0 20px; }
   .ct-track { margin-bottom:18px; }
   .ct-track:last-child { margin-bottom:0; }
   .ct-track-label { font:.78rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.03em; margin:0 0 10px; }
@@ -116,4 +129,24 @@ const cases: CaseData[] = zh ? [
   .ct-time { font:.72rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.03em; margin:0 0 2px; }
   .ct-node-title { font-size:1.05rem; margin:0 0 4px; }
   .ct-desc { color:var(--muted); font-size:.92rem; margin:0; }
+  @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+  @media (max-width:760px) { .case-ep-layout { grid-template-columns:1fr; } .case-ep-layout .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .case-ep-layout .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .case-ep-layout .ep-tab.active { border-bottom-color:var(--rose); } }
+  @media (prefers-reduced-motion:reduce) { .case-ep-layout .ep-panel.entering { animation:none; } }
 </style>
+
+<script is:inline>
+  document.addEventListener('click', function (event) {
+    var tab = event.target.closest('.case-ep-layout .ep-tab');
+    if (!tab) return;
+    var layout = tab.closest('.case-ep-layout');
+    var tabs = layout.querySelectorAll('.ep-tab');
+    var panels = layout.querySelectorAll('.ep-panel');
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    panels.forEach(function (p) { p.classList.remove('active', 'entering'); });
+    tab.classList.add('active');
+    var panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+    if (!panel) return;
+    panel.classList.add('active');
+    window.requestAnimationFrame(function () { panel.classList.add('entering'); });
+  });
+</script>

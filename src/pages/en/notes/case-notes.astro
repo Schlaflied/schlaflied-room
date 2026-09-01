@@ -3,3 +3,7 @@ import Base from '../../../layouts/Base.astro';
 import CaseTimeline from '../../../components/CaseTimeline.astro';
 ---
 <Base lang="en" title="Case Notes"><article class="prose"><p class="label">Traces / Case Notes</p><h1>On systems, evidence, and the process of being recognized.</h1><p>Public notes retain only redacted facts, timelines, and shareable learning — never personal data, raw evidence, or details that could affect a process.</p><CaseTimeline lang="en" /></article></Base>
+
+<style>
+  .prose:has(.case-ep-layout) { max-width:1000px; }
+</style>
