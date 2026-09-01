@@ -20,7 +20,7 @@ const videosLabel = zh ? '视频' : 'Videos';
   <h4 class="cat-videos-label">{videosLabel}</h4>
   <div class="cat-videos">
     {videos.map((src) => (
-      <video class="cat-video" src={src} controls preload="metadata" playsinline></video>
+      <video class="cat-video" src={src} poster={src.replace(/\.mp4$/, '-poster.jpg')} controls preload="metadata" playsinline></video>
     ))}
   </div>
   <div class="cat-lightbox" data-cat-lightbox hidden>
