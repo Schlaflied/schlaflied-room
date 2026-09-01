@@ -7,6 +7,7 @@ import Base from '../../../layouts/Base.astro';
 </div><div class="ep-panel" data-ep="3"><p>More work is posted on AO3, all of it in Chinese — for now, reading the English means translating it yourself:</p><p><a href="https://archiveofourown.org/users/ExcaliburSchlaflied" target="_blank" rel="noopener">AO3 · ExcaliburSchlaflied →</a></p></div></div><p><a href="/en/writing/">← Back to Writing</a></p></article></Base>
 
 <script is:inline>
+  document.addEventListener('astro:page-load', () => {
   document.querySelectorAll('.ep-layout').forEach((layout) => {
     const tabs = layout.querySelectorAll('.ep-tab');
     const panels = layout.querySelectorAll('.ep-panel');
@@ -45,6 +46,7 @@ import Base from '../../../layouts/Base.astro';
       });
     });
   });
+});
 </script>
 
 <style>
