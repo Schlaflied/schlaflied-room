@@ -4,3 +4,9 @@ dist/
 .wrangler/
 .env
 .DS_Store
+gen-panels.mjs
+zh_panel*.html
+en_panel*.html
+zh_script_style_raw.html
+en_script_style_raw.html
+*.paras.json
