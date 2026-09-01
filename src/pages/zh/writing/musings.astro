@@ -60,7 +60,7 @@ import Base from '../../../layouts/Base.astro';
   .ep-panel.entering p { animation: ep-copy-in .55s ease both; }
   .ep-panel.entering p:nth-child(2) { animation-delay:70ms; } .ep-panel.entering p:nth-child(3) { animation-delay:105ms; } .ep-panel.entering p:nth-child(4) { animation-delay:140ms; } .ep-panel.entering p:nth-child(5) { animation-delay:175ms; }
   .ep-panel p { margin:0; color:var(--muted); font-size:.96rem; line-height:1.8; }
-  .ep-panel p.scene-break { text-align:center; letter-spacing:.3em; color:var(--rose); opacity:.7; margin:8px 0; }
+  .ep-panel p.scene-break { text-align:center; letter-spacing:.3em; color:var(--rose); opacity:.7; margin:0; }
   @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); clip-path:inset(0 0 8% 0); } to { opacity:1; transform:none; clip-path:inset(0); } }
   @keyframes ep-copy-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   @media (max-width:760px) { .ep-layout { grid-template-columns:1fr; } .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .ep-tab.active { border-bottom-color:var(--rose); } }
