@@ -12,6 +12,24 @@ import Base from '../../../layouts/Base.astro';
     const panelContainer = layout.querySelector('.ep-panels');
     orderedTabs.forEach((tab) => tabContainer.appendChild(tab));
     orderedTabs.forEach((tab) => panelContainer.appendChild(layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]')));
+    const getStats = (panel) => {
+      const text = [...panel.querySelectorAll('p')].map((paragraph) => paragraph.textContent).join('');
+      const characters = [...text].filter((character) => !/\s/u.test(character)).length;
+      const minutes = Math.max(1, Math.ceil(characters / 450));
+      return `${characters.toLocaleString('en-US')} 字 · 约 ${minutes} 分钟`;
+    };
+    orderedTabs.forEach((tab) => {
+      const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+      const stats = getStats(panel);
+      const tabMeta = document.createElement('small');
+      tabMeta.className = 'ep-meta';
+      tabMeta.textContent = stats;
+      tab.appendChild(tabMeta);
+      const panelMeta = document.createElement('div');
+      panelMeta.className = 'ep-reading-meta';
+      panelMeta.textContent = `${stats} · 散文`;
+      panel.prepend(panelMeta);
+    });
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => t.classList.remove('active'));
@@ -33,9 +51,11 @@ import Base from '../../../layouts/Base.astro';
   .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
   .ep-tab:hover { color:var(--ink); }
   .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
+  .ep-meta { display:block; margin-top:3px; color:var(--muted); font: .72rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.02em; opacity:.82; }
   .ep-panels { min-width:0; }
   .ep-panel { display:none; gap:12px; max-width:100%; }
   .ep-panel.active { display:grid; }
+  .ep-reading-meta { color:var(--muted); font: .72rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.04em; margin-bottom:2px; opacity:.85; }
   .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
   .ep-panel.entering p { animation: ep-copy-in .55s ease both; }
   .ep-panel.entering p:nth-child(2) { animation-delay:70ms; } .ep-panel.entering p:nth-child(3) { animation-delay:105ms; } .ep-panel.entering p:nth-child(4) { animation-delay:140ms; } .ep-panel.entering p:nth-child(5) { animation-delay:175ms; }
