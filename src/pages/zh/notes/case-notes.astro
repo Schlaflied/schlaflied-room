@@ -3,9 +3,10 @@ import Base from '../../../layouts/Base.astro';
 import CaseTimeline from '../../../components/CaseTimeline.astro';
 import ContactRow from '../../../components/ContactRow.astro';
 ---
-<Base lang="zh" title="案件笔记"><article class="prose"><p class="label">随记 / Case Notes</p><h1>关于制度、证据和被承认的过程。</h1><p>公开笔记只保留经过删节的事实、时间线与可分享的经验；不放个人资料、原始证据或仍可能影响程序的细节。</p><CaseTimeline lang="zh" /><aside class="note">如果你在加拿大也遇到过类似的事，欢迎 DM 我——我可以给一些建议，也可以陪你一起把证据和材料整理清楚。<div class="note-contact"><ContactRow lang="zh" /></div></aside></article></Base>
+<Base lang="zh" title="案件笔记"><article class="prose"><p class="label">随记 / Case Notes</p><h1>关于制度、证据和被承认的过程。</h1><p class="case-subhead">以下三个案件，我从未请过律师，全部自己整理证据、自己走流程。</p><p>公开笔记只保留经过删节的事实、时间线与可分享的经验；不放个人资料、原始证据或仍可能影响程序的细节。</p><CaseTimeline lang="zh" /><aside class="note">如果你在加拿大也遇到过类似的事，欢迎 DM 我——我可以给一些建议，也可以陪你一起把证据和材料整理清楚。<div class="note-contact"><ContactRow lang="zh" /></div></aside></article></Base>
 
 <style>
   .prose:has(.case-ep-layout) { max-width:1000px; }
   .note-contact { margin-top:14px; }
+  .case-subhead { color:var(--rose); font-weight:500; }
 </style>
