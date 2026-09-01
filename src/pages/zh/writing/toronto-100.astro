@@ -7,6 +7,11 @@ import Base from '../../../layouts/Base.astro';
   document.querySelectorAll('.ep-layout').forEach((layout) => {
     const tabs = layout.querySelectorAll('.ep-tab');
     const panels = layout.querySelectorAll('.ep-panel');
+    const orderedTabs = [...tabs].sort((a, b) => Number(a.textContent.match(/\d+/)?.[0]) - Number(b.textContent.match(/\d+/)?.[0]));
+    const tabContainer = layout.querySelector('.ep-tabs');
+    const panelContainer = layout.querySelector('.ep-panels');
+    orderedTabs.forEach((tab) => tabContainer.appendChild(tab));
+    orderedTabs.forEach((tab) => panelContainer.appendChild(layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]')));
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => t.classList.remove('active'));
