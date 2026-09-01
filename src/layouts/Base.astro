@@ -17,7 +17,7 @@ const year = new Date().getFullYear();
 <!doctype html>
 <html lang={lang} data-theme="light">
   <head>
-    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={description} /><meta name="color-scheme" content="light dark" /><title>{title} · Schlaflied</title><ViewTransitions />
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><meta name="description" content={description} /><meta name="color-scheme" content="light dark" /><link rel="icon" type="image/svg+xml" href="/favicon.svg" /><title>{title} · Schlaflied</title><ViewTransitions />
     <script is:inline>(() => { try { const saved = localStorage.getItem('schlaflied-theme'); document.documentElement.dataset.theme = saved || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); } catch { document.documentElement.dataset.theme = 'light'; } })();</script>
   </head>
   <body>
