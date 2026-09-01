@@ -1,4 +1,9 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import CareerOpsLayout from '../../../components/CareerOpsLayout.astro';
 ---
-<Base lang="zh" title="career-ops"><article class="prose"><p class="label">开源贡献 / Open Source</p><h1>career-ops。</h1><div class="grid"><section class="card"><div><span class="number">开源贡献</span><h3>career-ops</h3><p>一个开源的求职自动化工具——不是我从零搭起来的项目，但架构和功能里有不小一部分出自我手，七十多个提交的 PR 里，有的改评分逻辑，有的补边界情况。我是贡献者，不是原作者。</p></div><a class="arrow" href="https://github.com/santifer/career-ops" target="_blank" rel="noopener" aria-label="打开 career-ops 仓库">→</a></section></div><p><a href="/zh/works/">← 回到作品</a></p></article></Base>
+<Base lang="zh" title="career-ops"><article class="prose"><p class="label">开源贡献 / Open Source</p><h1>career-ops。</h1><CareerOpsLayout lang="zh" /><p><a href="/zh/works/">← 回到作品</a></p></article></Base>
+
+<style>
+  .prose:has(.works-ep-layout) { max-width:1000px; }
+</style>

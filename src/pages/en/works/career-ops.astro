@@ -1,4 +1,9 @@
 ---
 import Base from '../../../layouts/Base.astro';
+import CareerOpsLayout from '../../../components/CareerOpsLayout.astro';
 ---
-<Base lang="en" title="career-ops"><article class="prose"><p class="label">Open Source</p><h1>career-ops.</h1><div class="grid"><section class="card"><div><span class="number">OPEN SOURCE</span><h3>career-ops</h3><p>An open-source job-search automation tool — not something I built from scratch, but a good part of the architecture and features carry my hand: seventy-plus merged pull requests, some fixing scoring logic, some closing edge cases. I'm a contributor, not the original author.</p></div><a class="arrow" href="https://github.com/santifer/career-ops" target="_blank" rel="noopener" aria-label="Open the career-ops repository">→</a></section></div><p><a href="/en/works/">← Back to Works</a></p></article></Base>
+<Base lang="en" title="career-ops"><article class="prose"><p class="label">Open Source</p><h1>career-ops.</h1><CareerOpsLayout lang="en" /><p><a href="/en/works/">← Back to Works</a></p></article></Base>
+
+<style>
+  .prose:has(.works-ep-layout) { max-width:1000px; }
+</style>

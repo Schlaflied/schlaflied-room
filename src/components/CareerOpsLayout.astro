@@ -1,0 +1,118 @@
+---
+interface Tab { key: string; title: string; body: string[]; list?: string[]; repo?: string; }
+interface Props { lang: 'zh' | 'en'; }
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+
+const tabs: Tab[] = zh ? [
+  {
+    key: 'overview',
+    title: '项目概览',
+    body: [
+      '一个开源的求职自动化工具——不是我从零搭起来的项目，但架构和功能里有不小一部分出自我手。截至目前，76 个提交的 PR 被合并，涉及评分逻辑、边界情况处理、以及几套完整的子系统设计。我是贡献者，不是原作者。',
+    ],
+    repo: 'https://github.com/santifer/career-ops',
+  },
+  {
+    key: 'jurisdiction',
+    title: 'Jurisdiction Compliance 架构',
+    body: [
+      '这是我最满意的部分——整个架构是我设计的。起点是发现 career-ops 读取的东西（招聘文案、申请表单、面试对话、offer 文件、流程时间线）恰好是各地劳动法在监管的对象：安大略 2026 年的招聘公示新规、美国各州的薪资历史禁令、欧盟与日本的公平招聘框架。于是我把它做成一条通用检测流程：跟候选人所在司法辖区做比对，只提醒、不代劳、不判定"雇主违法"。',
+      '架构定下了一份共享契约，后续每个信号都遵守：（1）检测逻辑通用，只有数据行本地化——加拿大只是最常见的第一颗种子，不是"专属功能"；（2）没有可引用法律来源和生效日期的条目不能进表；（3）措辞只陈述可验证的事实（"这个薪资区间宽 9 万，O. Reg. 476/24 规定上限 5 万"），从不断言"这家雇主违法"；（4）只提醒、人在回路，不自动拦截、不自动填表、不自动改用户文件；（5）"存在性"信号可独立触发，"缺失性"信号只能作为佐证——因为聚合平台经常整段抹掉合规区块。',
+      '目前已合并 11 个信号成员：拒信延迟、禁止内容（"加拿大经验"要求 / 薪资历史询问）、薪资透明度披露、最低工资地板、竞业限制条款说明、低于法定条款检查、受保护事项面试提问、移民身份要求越界、用工身份误分类、中介牌照核验，外加一个让所有表格保持时效性的"过期校验器"。每个信号都落在 career-ops 现有模式文件的对应位置——招聘文案/申请表进 Block G，offer 文件进 offer-prep，面试对话进 interview-redflag，流程时间线进 followup。',
+    ],
+    repo: 'https://github.com/santifer/career-ops/issues/2026',
+  },
+  {
+    key: 'sot',
+    title: 'Source-of-Truth 分层设计',
+    body: [
+      '这个也是我设计的：把 career-ops 原本"一刀切"的可信文件列表拆成两层。cv.md、article-digest.md、config/profile.yml 这些用户亲手写的文件是"主层"，完全可信；story-bank.md 这类"衍生层"文件——通常是从过往面试准备文档里提炼出来的——只给予表达/措辞层面的信任，不能单独作为事实来源。',
+      '起因是发现了一条真实可复现的漏洞链：JD 措辞被写进某次面试准备文档 → 被吸收进 story-bank.md 变成一条独立故事 → 被当成跟 cv.md 同等可信的事实 → 最终出现在简历条目或求职信里 → 每复用一次就再漂移一点。修复方案本身遵循"只读不改、需要确认才能升级"的原则——衍生文件永远不会被脚本自动提权为主层事实，必须经过一次显式确认。这条不变式被维护者专门点名认可。',
+    ],
+    repo: 'https://github.com/santifer/career-ops/pull/2948',
+  },
+] : [
+  {
+    key: 'overview',
+    title: 'Overview',
+    body: [
+      "An open-source job-search automation tool — not a project I built from zero, but a fair share of its architecture and features are mine. 76 merged PRs to date, spanning scoring logic, edge-case handling, and a few full subsystem designs. I'm a contributor, not the original author.",
+    ],
+    repo: 'https://github.com/santifer/career-ops',
+  },
+  {
+    key: 'jurisdiction',
+    title: 'Jurisdiction Compliance Architecture',
+    body: [
+      "This is the part I'm proudest of — I designed the whole architecture. It started from noticing that what career-ops already reads (posting text, application forms, interview conversations, offer documents, process timelines) is exactly what local employment law regulates: Ontario's 2026 posting-disclosure rules, US state salary-history bans, EU and Japan fair-hiring frameworks. So I built it as one generic check pipeline: compare against the candidate's own jurisdiction, warn only, never assert an employer broke the law.",
+      'The architecture is pinned by a shared contract every signal follows: (1) the check logic is universal, only the data rows are local — Canada is just the most frequent first seed, not a dedicated feature; (2) no table entry without a citable legal source and an effective date; (3) phrasing states only the verifiable fact ("this range is $90K wide; O. Reg. 476/24 caps covered ranges at $50K"), never "this employer is breaking the law"; (4) warn-only, human-in-the-loop — never blocks, never auto-fills, never auto-edits user files; (5) presence-based signals can fire standalone, absence-based signals are corroborating-only, since aggregators often strip compliance blocks entirely.',
+      "11 signal members are merged so far: rejection latency, prohibited content (\"Canadian experience\" requirements / salary-history questions), pay-transparency disclosure, minimum-wage floor, restrictive-covenant notes, sub-statutory terms check, protected-grounds interview questions, immigration-status requirement overreach, employment misclassification, agency licensing check, plus a staleness validator that keeps every table current. Each signal lands in the matching existing mode file — posting/form surfaces go into Block G, offer documents into offer-prep, interview conversations into interview-redflag, process timelines into followup.",
+    ],
+    repo: 'https://github.com/santifer/career-ops/issues/2026',
+  },
+  {
+    key: 'sot',
+    title: 'Source-of-Truth Tiering',
+    body: [
+      "Also my design: splitting career-ops's previously flat list of trusted files into two tiers. User-authored files like cv.md, article-digest.md, and config/profile.yml form the primary tier, fully trusted. Derived files like story-bank.md — usually distilled from past interview-prep documents — only get narrative/phrasing-level trust, never standalone fact authority.",
+      "It came from finding a real, reproducible vulnerability chain: JD-shaped phrasing lands in one interview-prep document → gets absorbed into story-bank.md as a standalone story → gets treated as cv.md-equivalent fact → surfaces in CV bullets or cover letters → drifts a little further with every reuse. The fix itself follows a read-only-by-construction principle — a derived file is never auto-promoted to primary-tier fact by any script; it always requires an explicit confirmation step. The maintainer specifically praised this invariant.",
+    ],
+    repo: 'https://github.com/santifer/career-ops/pull/2948',
+  },
+];
+
+const repoLabel = zh ? '在 GitHub 查看 →' : 'View on GitHub →';
+---
+<div class="ep-layout works-ep-layout">
+  <div class="ep-tabs">
+    {tabs.map((t, i) => (
+      <button type="button" class={`ep-tab${i === 0 ? ' active' : ''}`} data-ep={i}>{t.title}</button>
+    ))}
+  </div>
+  <div class="ep-panels">
+    {tabs.map((t, i) => (
+      <div class={`ep-panel${i === 0 ? ' active' : ''}`} data-ep={i}>
+        <h2 class="ep-title">{t.title}</h2>
+        {t.body.map((p) => <p class="wk-desc">{p}</p>)}
+        {t.repo && <a class="wk-repo" href={t.repo} target="_blank" rel="noopener">{repoLabel}</a>}
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .works-ep-layout { margin-top:24px; display:grid; grid-template-columns:230px 1fr; gap:36px; align-items:start; }
+  .works-ep-layout .ep-tabs { display:flex; flex-direction:column; position:sticky; top:24px; }
+  .works-ep-layout .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
+  .works-ep-layout .ep-tab:hover { color:var(--ink); }
+  .works-ep-layout .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
+  .works-ep-layout .ep-panels { min-width:0; }
+  .works-ep-layout .ep-panel { display:none; }
+  .works-ep-layout .ep-panel.active { display:block; }
+  .works-ep-layout .ep-title { margin:0 0 18px; font-size:clamp(1.6rem,3vw,2.2rem); line-height:1.25; font-weight:500; }
+  .wk-desc { color:var(--muted); font-size:.98rem; line-height:1.8; margin:0 0 18px; max-width:700px; }
+  .wk-repo { display:inline-block; color:var(--rose); font-size:.92rem; text-decoration:none; margin-top:6px; }
+  .wk-repo:hover { text-decoration:underline; }
+  .works-ep-layout .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+  @media (max-width:760px) { .works-ep-layout { grid-template-columns:1fr; } .works-ep-layout .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .works-ep-layout .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .works-ep-layout .ep-tab.active { border-bottom-color:var(--rose); } }
+  @media (prefers-reduced-motion:reduce) { .works-ep-layout .ep-panel.entering { animation:none; } }
+</style>
+
+<script is:inline>
+  document.addEventListener('click', function (event) {
+    var tab = event.target.closest('.works-ep-layout .ep-tab');
+    if (!tab) return;
+    var layout = tab.closest('.works-ep-layout');
+    var tabs = layout.querySelectorAll('.ep-tab');
+    var panels = layout.querySelectorAll('.ep-panel');
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    panels.forEach(function (p) { p.classList.remove('active', 'entering'); });
+    tab.classList.add('active');
+    var panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+    if (!panel) return;
+    panel.classList.add('active');
+    window.requestAnimationFrame(function () { panel.classList.add('entering'); });
+  });
+</script>
