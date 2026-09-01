@@ -1,0 +1,94 @@
+<script is:inline>
+  document.querySelectorAll('.ep-layout').forEach((layout) => {
+    const tabs = layout.querySelectorAll('.ep-tab');
+    const panels = layout.querySelectorAll('.ep-panel');
+    const orderedTabs = [...tabs].sort((a, b) => Number(a.textContent.match(/\d+/)?.[0]) - Number(b.textContent.match(/\d+/)?.[0]));
+    const tabContainer = layout.querySelector('.ep-tabs');
+    const panelContainer = layout.querySelector('.ep-panels');
+    orderedTabs.forEach((tab) => tabContainer.appendChild(tab));
+    orderedTabs.forEach((tab) => panelContainer.appendChild(layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]')));
+    const getStats = (panel) => {
+      const text = [...panel.querySelectorAll('p')].map((paragraph) => paragraph.textContent).join('');
+      const characters = [...text].filter((character) => !/\s/u.test(character)).length;
+      const minutes = Math.max(1, Math.ceil(characters / 450));
+      return `${characters.toLocaleString('en-US')} 字 · 约 ${minutes} 分钟`;
+    };
+    orderedTabs.forEach((tab) => {
+      const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+      const stats = getStats(panel);
+      const panelTitle = document.createElement('h2');
+      panelTitle.className = 'ep-title';
+      panelTitle.textContent = tab.textContent.trim();
+      const panelMeta = document.createElement('div');
+      panelMeta.className = 'ep-reading-meta';
+      panelMeta.textContent = `${stats} · 散文`;
+      panel.prepend(panelMeta);
+      panel.prepend(panelTitle);
+    });
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active', 'entering'));
+        tab.classList.add('active');
+        const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+        panel.classList.add('active');
+        window.requestAnimationFrame(() => panel.classList.add('entering'));
+        panels[0].closest('.ep-panels').scrollTop = 0;
+      });
+    });
+  });
+
+  document.addEventListener('click', function (event) {
+    var target = event.target;
+    var openBtn = target.closest('[data-ep-photo-open]');
+    if (openBtn) {
+      var layout = openBtn.closest('.ep-layout');
+      var box = layout && layout.querySelector('[data-ep-lightbox]');
+      var img = layout && layout.querySelector('[data-ep-lightbox-img]');
+      if (box && img) { img.src = openBtn.getAttribute('data-src') || ''; box.hidden = false; }
+      return;
+    }
+    var closeBtn = target.closest('[data-ep-lightbox-close]');
+    if (closeBtn || target.hasAttribute('data-ep-lightbox')) {
+      var openLightbox = target.closest('.ep-layout') && target.closest('.ep-layout').querySelector('[data-ep-lightbox]');
+      if (openLightbox) openLightbox.hidden = true;
+    }
+  });
+  document.addEventListener('keydown', function (event) {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('[data-ep-lightbox]').forEach(function (box) { box.hidden = true; });
+  });
+</script>
+
+<style>
+  .prose:has(.ep-layout) { max-width:1000px; }
+  .ep-layout { margin-top:24px; display:grid; grid-template-columns:230px 1fr; gap:36px; align-items:start; }
+  .ep-tabs { display:flex; flex-direction:column; position:sticky; top:24px; }
+  .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
+  .ep-tab:hover { color:var(--ink); }
+  .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
+  .ep-panels { min-width:0; }
+  .ep-panel { display:none; gap:12px; max-width:100%; }
+  .ep-panel.active { display:grid; }
+  .ep-title { margin:0 0 2px; font-size:clamp(1.8rem,3.5vw,3rem); line-height:1.2; font-weight:500; letter-spacing:-.035em; }
+  .ep-reading-meta { color:var(--muted); font: .72rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.04em; margin-bottom:2px; opacity:.85; }
+  .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
+  .ep-panel.entering p { animation: ep-copy-in .55s ease both; }
+  .ep-panel.entering p:nth-child(2) { animation-delay:70ms; } .ep-panel.entering p:nth-child(3) { animation-delay:105ms; } .ep-panel.entering p:nth-child(4) { animation-delay:140ms; } .ep-panel.entering p:nth-child(5) { animation-delay:175ms; }
+  .ep-panel p { margin:0; color:var(--muted); font-size:.96rem; line-height:1.8; }
+  @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); clip-path:inset(0 0 8% 0); } to { opacity:1; transform:none; clip-path:inset(0); } }
+  @keyframes ep-copy-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
+  .ep-photos { display:flex; flex-wrap:wrap; gap:12px; margin:0 0 8px; }
+  .ep-photo { margin:0; max-width:280px; flex:1 1 200px; }
+  .ep-photo img { display:block; width:100%; height:auto; border:1px solid var(--line); }
+  .ep-photo-open { display:block; padding:0; border:none; background:none; cursor:zoom-in; width:100%; }
+  .ep-photo-open img { display:block; width:100%; height:auto; border:1px solid var(--line); transition:opacity .2s ease; }
+  .ep-photo-open:hover img { opacity:.88; }
+  .ep-lightbox { position:fixed; inset:0; z-index:20; background:rgb(10 14 24 / .86); align-items:center; justify-content:center; padding:5vh 4vw; }
+  .ep-lightbox:not([hidden]) { display:flex; }
+  .ep-lightbox img { max-width:100%; max-height:100%; box-shadow:0 12px 40px rgb(0 0 0 / .4); }
+  .ep-lightbox-close { position:absolute; top:18px; right:22px; background:none; border:1px solid rgb(244 234 217 / .5); color:#f4ead9; width:38px; height:38px; border-radius:999px; font-size:1.4rem; line-height:1; cursor:pointer; }
+  .ep-photo figcaption { margin-top:8px; color:var(--muted); font-size:.8rem; letter-spacing:.02em; }
+  @media (max-width:760px) { .ep-layout { grid-template-columns:1fr; } .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .ep-tab.active { border-bottom-color:var(--rose); } }
+  @media (prefers-reduced-motion:reduce) { .ep-panel.entering, .ep-panel.entering p { animation:none; } }
+</style>
