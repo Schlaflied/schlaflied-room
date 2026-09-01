@@ -1,0 +1,119 @@
+---
+interface Node { time: string; title: string; desc: string; status: 'done' | 'open'; }
+interface Track { label?: string; nodes: Node[]; }
+interface CaseData { label: string; title: string; tracks: Track[]; }
+interface Props { lang: 'zh' | 'en'; }
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+
+const cases: CaseData[] = zh ? [
+  {
+    label: '案件 A',
+    title: '房东租务纠纷（LTB）',
+    tracks: [{ nodes: [
+      { time: '2025年10月中', title: '提交申请', desc: '房东未经同意乱扣钱，向房东与租客委员会（LTB）提交申请。', status: 'done' },
+      { time: '2026年2月底', title: '第一次开庭', desc: '首次听证，和解未成。', status: 'done' },
+      { time: '2026年9月中', title: '正式开庭', desc: '进入正式审理阶段。', status: 'open' },
+    ]}],
+  },
+  {
+    label: '案件 B',
+    title: 'PGWP 拒签与再申请（IRCC）',
+    tracks: [{ nodes: [
+      { time: '2026年3月初', title: '收到拒信', desc: 'PGWP 申请被拒。', status: 'done' },
+      { time: '同期', title: '提交 Reconsideration', desc: '收到拒信后立刻提交复议申请，并寻求他人协助与意见。', status: 'done' },
+      { time: '2026年4月底', title: '下签', desc: '复议成功，案件完结。', status: 'done' },
+    ]}],
+  },
+  {
+    label: '案件 C',
+    title: '劳务纠纷（用工身份误分类）',
+    tracks: [
+      { label: 'CRA 身份裁定', nodes: [
+        { time: '2026年6月底', title: '递交裁定申请', desc: '就用工身份误分类问题向 CRA 申请正式裁定。', status: 'done' },
+        { time: '2026年8月底', title: '裁定结果', desc: 'CRA 裁定为雇员身份，此线完结。', status: 'done' },
+      ]},
+      { label: 'Small Claims 索赔', nodes: [
+        { time: '2026年8月底', title: '提交索赔', desc: '向法院提交小额索赔申请。', status: 'open' },
+      ]},
+    ],
+  },
+] : [
+  {
+    label: 'Case A',
+    title: 'Landlord Dispute (LTB)',
+    tracks: [{ nodes: [
+      { time: 'Mid Oct 2025', title: 'Application filed', desc: 'Filed with the Landlord and Tenant Board after unauthorized deductions from a deposit.', status: 'done' },
+      { time: 'Late Feb 2026', title: 'First hearing', desc: 'First hearing; settlement attempt failed.', status: 'done' },
+      { time: 'Mid Sep 2026', title: 'Formal hearing', desc: 'Case moves into formal hearing.', status: 'open' },
+    ]}],
+  },
+  {
+    label: 'Case B',
+    title: 'PGWP Refusal & Reconsideration (IRCC)',
+    tracks: [{ nodes: [
+      { time: 'Early Mar 2026', title: 'Refusal received', desc: 'PGWP application refused.', status: 'done' },
+      { time: 'Same period', title: 'Reconsideration filed', desc: 'Filed a reconsideration request immediately, and rallied support.', status: 'done' },
+      { time: 'Late Apr 2026', title: 'Approved', desc: 'Reconsideration succeeded; case closed.', status: 'done' },
+    ]}],
+  },
+  {
+    label: 'Case C',
+    title: 'Employment Misclassification',
+    tracks: [
+      { label: 'CRA ruling', nodes: [
+        { time: 'Late Jun 2026', title: 'Ruling request filed', desc: 'Requested a formal CRA ruling on worker status.', status: 'done' },
+        { time: 'Late Aug 2026', title: 'Ruling issued', desc: 'CRA ruled employee status; this track closed.', status: 'done' },
+      ]},
+      { label: 'Small Claims', nodes: [
+        { time: 'Late Aug 2026', title: 'Claim filed', desc: 'Filed a small claims court claim.', status: 'open' },
+      ]},
+    ],
+  },
+];
+---
+<div class="case-timeline">
+  {cases.map((c) => (
+    <div class="ct-case">
+      <p class="ct-label">{c.label}</p>
+      <h3 class="ct-title">{c.title}</h3>
+      {c.tracks.map((track) => (
+        <div class="ct-track">
+          {track.label && <p class="ct-track-label">{track.label}</p>}
+          <div class="ct-nodes">
+            {track.nodes.map((n) => (
+              <div class="ct-node">
+                <span class={`ct-dot ${n.status}`}></span>
+                <div class="ct-node-body">
+                  <p class="ct-time">{n.time}</p>
+                  <p class="ct-node-title">{n.title}</p>
+                  <p class="ct-desc">{n.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  ))}
+</div>
+
+<style>
+  .case-timeline { margin-top:24px; }
+  .ct-case { margin-bottom:44px; padding-bottom:44px; border-bottom:1px dashed var(--line); }
+  .ct-case:last-child { border-bottom:0; margin-bottom:0; padding-bottom:0; }
+  .ct-label { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); letter-spacing:.06em; text-transform:uppercase; margin:0; }
+  .ct-title { font-size:1.3rem; font-weight:500; margin:8px 0 20px; }
+  .ct-track { margin-bottom:18px; }
+  .ct-track:last-child { margin-bottom:0; }
+  .ct-track-label { font:.78rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.03em; margin:0 0 10px; }
+  .ct-nodes { position:relative; padding-left:24px; }
+  .ct-nodes::before { content:''; position:absolute; left:5px; top:6px; bottom:6px; width:2px; background:var(--line); }
+  .ct-node { position:relative; padding-bottom:22px; }
+  .ct-node:last-child { padding-bottom:0; }
+  .ct-dot { position:absolute; left:-24px; top:5px; width:12px; height:12px; border-radius:999px; background:var(--rose); }
+  .ct-dot.open { background:var(--paper); border:2px solid var(--rose); }
+  .ct-time { font:.72rem ui-sans-serif,system-ui,sans-serif; color:var(--muted); letter-spacing:.03em; margin:0 0 2px; }
+  .ct-node-title { font-size:1.05rem; margin:0 0 4px; }
+  .ct-desc { color:var(--muted); font-size:.92rem; margin:0; }
+</style>

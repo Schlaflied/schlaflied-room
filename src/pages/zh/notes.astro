@@ -2,8 +2,9 @@
 import Base from '../../layouts/Base.astro';
 import CatAlbum from '../../components/CatAlbum.astro';
 ---
-<Base lang="zh" title="随记"><article class="prose"><p class="label">随记 / Traces</p><h1>有些东西不需要先长成一个项目。</h1><div class="grid"><section class="card"><div><span class="number">CASE NOTES</span><h3>案件笔记</h3><p>关于制度、证据和被承认的过程。公开笔记只保留经过删节的事实、时间线与可分享的经验；不放个人资料、原始证据或仍可能影响程序的细节。</p></div></section></div><section class="cats"><span class="number">TRACES</span><h3>猫与生活</h3><p>不配文案，不讲故事，就是一面很普通的照片墙。点开看大图。</p><CatAlbum lang="zh" /></section><aside class="note">案件与猫在这个网站上有各自的房间：一个需要准确，一个只需要被好好记得。</aside></article></Base>
+<Base lang="zh" title="随记"><article class="prose"><p class="label">随记 / Traces</p><h1>有些东西不需要先长成一个项目。</h1><div class="grid"><section class="card"><div><span class="number">CASE NOTES</span><h3>案件笔记</h3><p>关于制度、证据和被承认的过程。公开笔记只保留经过删节的事实、时间线与可分享的经验；不放个人资料、原始证据或仍可能影响程序的细节。</p><p class="essay-more"><a href="/zh/notes/case-notes/">阅读更多 →</a></p></div></section></div><section class="cats"><span class="number">TRACES</span><h3>猫与生活</h3><p>不配文案，不讲故事，就是一面很普通的照片墙。点开看大图。</p><CatAlbum lang="zh" /></section><aside class="note">案件与猫在这个网站上有各自的房间：一个需要准确，一个只需要被好好记得。</aside></article></Base>
 
 <style>
   .cats { margin:56px 0 0; } .cats .number { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); } .cats h3 { font-size:1.55rem; font-weight:500; margin:13px 0 6px; } .cats p { color:var(--muted); margin:0; font-size:.92rem; }
+  .essay-more { margin-top:14px; } .essay-more a { color:var(--rose); font-size:.92rem; text-decoration:none; } .essay-more a:hover { text-decoration:underline; }
 </style>
