@@ -2,7 +2,7 @@
 interface Props { lang: 'zh' | 'en'; }
 const { lang } = Astro.props;
 const zh = lang === 'zh';
-const count = 26;
+const count = 33;
 const videoCount = 4;
 const photos = Array.from({ length: count }, (_, i) => `/images/cats/cat-${String(i + 1).padStart(2, '0')}.jpg`);
 const videos = Array.from({ length: videoCount }, (_, i) => `/videos/cats/cat-vid-${String(i + 1).padStart(2, '0')}.mp4`);
