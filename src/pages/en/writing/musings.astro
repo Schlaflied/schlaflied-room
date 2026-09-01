@@ -21,6 +21,7 @@ import Base from '../../../layouts/Base.astro';
     };
     orderedTabs.forEach((tab) => {
       const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+      panel.querySelectorAll('.ep-title, .ep-reading-meta').forEach((el) => el.remove());
       const stats = getStats(panel);
       const panelTitle = document.createElement('h2');
       panelTitle.className = 'ep-title';
