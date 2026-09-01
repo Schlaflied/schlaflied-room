@@ -20,7 +20,10 @@ const videosLabel = zh ? '视频' : 'Videos';
   <h4 class="cat-videos-label">{videosLabel}</h4>
   <div class="cat-videos">
     {videos.map((src) => (
-      <video class="cat-video" src={src} poster={src.replace(/\.mp4$/, '-poster.jpg')} controls preload="metadata" playsinline></video>
+      <div class="cat-video-wrap">
+        <video class="cat-video" poster={src.replace(/\.mp4$/, '-poster.jpg')} preload="none" playsinline data-src={src}></video>
+        <button type="button" class="cat-video-play" data-cat-video-play aria-label={zh ? '播放' : 'Play'}>&#9654;</button>
+      </div>
     ))}
   </div>
   <div class="cat-lightbox" data-cat-lightbox hidden>
@@ -40,7 +43,10 @@ const videosLabel = zh ? '视频' : 'Videos';
   .cat-close { position:absolute; top:18px; right:22px; background:none; border:1px solid rgb(244 234 217 / .5); color:#f4ead9; width:38px; height:38px; border-radius:999px; font-size:1.4rem; line-height:1; cursor:pointer; }
   .cat-videos-label { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); letter-spacing:.06em; text-transform:uppercase; margin:32px 0 12px; }
   .cat-videos { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px; }
+  .cat-video-wrap { position:relative; }
   .cat-video { width:100%; max-height:360px; border:1px solid var(--line); background:#000; display:block; }
+  .cat-video-play { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:52px; height:52px; border-radius:999px; background:rgb(10 14 24 / .6); border:1px solid rgb(244 234 217 / .7); color:#f4ead9; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .cat-video-play:disabled { opacity:.5; cursor:wait; }
   @media (prefers-reduced-motion:reduce) { .cat-thumb img { transition:none; } }
 </style>
 
@@ -60,6 +66,24 @@ const videosLabel = zh ? '视频' : 'Videos';
     if (closeBtn || target.hasAttribute('data-cat-lightbox')) {
       var openLightbox = target.closest('.cat-album') && target.closest('.cat-album').querySelector('[data-cat-lightbox]');
       if (openLightbox) openLightbox.hidden = true;
+      return;
+    }
+    var playBtn = target.closest('[data-cat-video-play]');
+    if (playBtn) {
+      var wrap = playBtn.closest('.cat-video-wrap');
+      var video = wrap && wrap.querySelector('video.cat-video');
+      if (!video) return;
+      playBtn.disabled = true;
+      fetch(video.dataset.src)
+        .then(function (res) { return res.blob(); })
+        .then(function (blob) {
+          video.src = URL.createObjectURL(blob);
+          video.controls = true;
+          video.load();
+          return video.play();
+        })
+        .then(function () { playBtn.remove(); })
+        .catch(function () { playBtn.disabled = false; });
     }
   });
   document.addEventListener('keydown', function (event) {
