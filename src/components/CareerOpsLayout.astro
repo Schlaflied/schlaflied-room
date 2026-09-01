@@ -32,6 +32,16 @@ const tabs: Tab[] = zh ? [
     ],
     repo: 'https://github.com/santifer/career-ops/pull/2948',
   },
+  {
+    key: 'sqlite',
+    title: 'SQLite 索引层设计',
+    body: [
+      '这是我自己提的 RFC，也是我实现的：给求职追踪器（当时是一份纯 Markdown 表格）加一层 SQLite 派生索引。起因是自己的真实数据——两个月内积累到 934 条记录后，校验脚本报出 422 个错误，全是"多写入者 + 没有 schema"这种结构性问题的产物，不是用户手误：编码乱码、分数串到状态列里、ID 缺失或重复、日期格式错乱。',
+      '设计上最关键的一步是把原本提议的方案倒过来：不是让数据库直接取代 Markdown 成为唯一真相来源，而是先做"纯派生索引"——Markdown 继续是唯一真相来源，数据库只是从它重建出来的只读镜像，删掉随时可以重建，不会丢任何东西。数据库替代 Markdown 成为主存储，被明确划成后续一个独立的、用户自己选择开启的阶段，不是默认行为。这个提案被维护者采纳，"顺序倒过来"就是照我的方案定的。',
+      '实现只用了 Node 22.5+ 内置的 SQLite，没引入新依赖；round-trip 测试保证 Markdown → 数据库 → 导出回 Markdown 完全一致；用真实的 934 条数据验证过，一次同步就报出全部 422 个错误分类且原文件分毫未动。',
+    ],
+    repo: 'https://github.com/santifer/career-ops/pull/919',
+  },
 ] : [
   {
     key: 'overview',
@@ -59,6 +69,16 @@ const tabs: Tab[] = zh ? [
       "It came from finding a real, reproducible vulnerability chain: JD-shaped phrasing lands in one interview-prep document → gets absorbed into story-bank.md as a standalone story → gets treated as cv.md-equivalent fact → surfaces in CV bullets or cover letters → drifts a little further with every reuse. The fix itself follows a read-only-by-construction principle — a derived file is never auto-promoted to primary-tier fact by any script; it always requires an explicit confirmation step. The maintainer specifically praised this invariant.",
     ],
     repo: 'https://github.com/santifer/career-ops/pull/2948',
+  },
+  {
+    key: 'sqlite',
+    title: 'SQLite Index Layer',
+    body: [
+      "I proposed this RFC myself, and implemented it: adding a SQLite derived-index layer on top of the application tracker (a plain markdown table at the time). It came from my own real data — after two months of heavy use, the tracker hit 934 rows and the validator reported 422 errors, all structural artifacts of many writers plus no schema, not user typos: encoding corruption, scores stranded in the status column, missing or duplicate IDs, malformed dates.",
+      "The key design decision was inverting the originally proposed rollout order: instead of letting the database immediately replace markdown as the single source of truth, ship a pure derived index first — markdown stays the source of truth, the database is just a read-only mirror rebuilt from it, safe to delete and rebuild at any point without losing anything. Flipping the database into the primary store became an explicit, separate, opt-in phase later, never the default. That proposal was adopted — the inverted order is exactly my design.",
+      "The implementation uses only Node 22.5+'s built-in SQLite, no new dependency. Round-trip tests guarantee markdown → database → exported markdown is byte-identical. Validated against real data: one sync against the 934-row tracker reported every one of the 422 error classes while leaving the source file untouched.",
+    ],
+    repo: 'https://github.com/santifer/career-ops/pull/919',
   },
 ];
 
