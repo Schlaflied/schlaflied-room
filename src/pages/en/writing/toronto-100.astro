@@ -13,6 +13,10 @@ import Base from '../../../layouts/Base.astro';
     const panelContainer = layout.querySelector('.ep-panels');
     orderedTabs.forEach((tab) => tabContainer.appendChild(tab));
     orderedTabs.forEach((tab) => panelContainer.appendChild(layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]')));
+    tabs.forEach((t) => t.classList.remove('active'));
+    panels.forEach((p) => p.classList.remove('active'));
+    orderedTabs[0].classList.add('active');
+    layout.querySelector('.ep-panel[data-ep="' + orderedTabs[0].dataset.ep + '"]').classList.add('active');
     const getStats = (panel) => {
       const text = [...panel.querySelectorAll('p')].map((paragraph) => paragraph.textContent).join(' ');
       const words = (text.match(/\S+/g) || []).length;
