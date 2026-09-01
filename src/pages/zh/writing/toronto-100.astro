@@ -21,14 +21,14 @@ import Base from '../../../layouts/Base.astro';
     orderedTabs.forEach((tab) => {
       const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
       const stats = getStats(panel);
-      const tabMeta = document.createElement('small');
-      tabMeta.className = 'ep-meta';
-      tabMeta.textContent = stats;
-      tab.appendChild(tabMeta);
+      const panelTitle = document.createElement('h2');
+      panelTitle.className = 'ep-title';
+      panelTitle.textContent = tab.textContent.trim();
       const panelMeta = document.createElement('div');
       panelMeta.className = 'ep-reading-meta';
       panelMeta.textContent = `${stats} · 散文`;
       panel.prepend(panelMeta);
+      panel.prepend(panelTitle);
     });
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
@@ -51,10 +51,10 @@ import Base from '../../../layouts/Base.astro';
   .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
   .ep-tab:hover { color:var(--ink); }
   .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
-  .ep-meta { display:block; margin-top:3px; color:var(--muted); font: .72rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.02em; opacity:.82; }
   .ep-panels { min-width:0; }
   .ep-panel { display:none; gap:12px; max-width:100%; }
   .ep-panel.active { display:grid; }
+  .ep-title { margin:0 0 2px; font-size:clamp(1.8rem,3.5vw,3rem); line-height:1.2; font-weight:500; letter-spacing:-.035em; }
   .ep-reading-meta { color:var(--muted); font: .72rem ui-sans-serif,system-ui,sans-serif; letter-spacing:.04em; margin-bottom:2px; opacity:.85; }
   .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
   .ep-panel.entering p { animation: ep-copy-in .55s ease both; }
