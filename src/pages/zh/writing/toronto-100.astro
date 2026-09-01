@@ -10,9 +10,11 @@ import Base from '../../../layouts/Base.astro';
     tabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         tabs.forEach((t) => t.classList.remove('active'));
-        panels.forEach((p) => p.classList.remove('active'));
+        panels.forEach((p) => p.classList.remove('active', 'entering'));
         tab.classList.add('active');
-        layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]').classList.add('active');
+        const panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+        panel.classList.add('active');
+        window.requestAnimationFrame(() => panel.classList.add('entering'));
         panels[0].closest('.ep-panels').scrollTop = 0;
       });
     });
@@ -29,6 +31,12 @@ import Base from '../../../layouts/Base.astro';
   .ep-panels { min-width:0; }
   .ep-panel { display:none; gap:12px; max-width:100%; }
   .ep-panel.active { display:grid; }
+  .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
+  .ep-panel.entering p { animation: ep-copy-in .55s ease both; }
+  .ep-panel.entering p:nth-child(2) { animation-delay:70ms; } .ep-panel.entering p:nth-child(3) { animation-delay:105ms; } .ep-panel.entering p:nth-child(4) { animation-delay:140ms; } .ep-panel.entering p:nth-child(5) { animation-delay:175ms; }
   .ep-panel p { margin:0; color:var(--muted); font-size:.96rem; line-height:1.8; }
+  @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); clip-path:inset(0 0 8% 0); } to { opacity:1; transform:none; clip-path:inset(0); } }
+  @keyframes ep-copy-in { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:none; } }
   @media (max-width:760px) { .ep-layout { grid-template-columns:1fr; } .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .ep-tab.active { border-bottom-color:var(--rose); } }
+  @media (prefers-reduced-motion:reduce) { .ep-panel.entering, .ep-panel.entering p { animation:none; } }
 </style>
