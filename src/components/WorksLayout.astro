@@ -1,0 +1,117 @@
+---
+interface ProjectData { number: string; title: string; desc: string; stack: string[]; repo: string; }
+interface Props { lang: 'zh' | 'en'; }
+const { lang } = Astro.props;
+const zh = lang === 'zh';
+
+const projects: ProjectData[] = zh ? [
+  {
+    number: '01',
+    title: 'Plot Ark',
+    desc: '一个仍在自己重量下运转的教育项目。它想回答一个问题：能不能在学生真正撑不住之前，就先看出他卡住的地方——是概念没懂、是语言，还是选错了学习的路。项目页会随着它的进展慢慢补上，而不是先写好一份完整的介绍。',
+    stack: ['前端：React + TypeScript + Vite', '后端：Python + Flask Blueprints', 'AI：OpenAI GPT-4o / Google Gemini', '知识图谱：LightRAG + networkx + react-force-graph-2d', '数据库：PostgreSQL', '缓存：Redis', '行为数据：xAPI 1.0.3 + mini-LRS', '分析引擎：A2A 多智能体（Hive 架构）', '报告导出：ReportLab + python-docx + openpyxl + matplotlib', '课程导出：IMS Common Cartridge', '部署：Docker Compose'],
+    repo: 'https://github.com/Schlaflied/Plot-Ark',
+  },
+  {
+    number: '02',
+    title: 'ClearCover',
+    desc: '保险人话翻译器。上传保单，逐条换成人话——只翻译，不建议购买。它诞生于2026年7月的一个深夜，我在帮爸妈逐条啃一份 Manulife 旅行保险的条款。后来它也变成我练手 AEO / SEO / GEO 的地方：一个足够日常、谁都搜得到的题目，跟 Plot Ark 的宏大刻意相反。',
+    stack: ['前端：React + Vite（nginx 托管）', '后端：Express（Node）+ FastAPI（Python，pdftotext / ocrmypdf）', 'LLM：十家任选（Claude / OpenAI / Gemini / DeepSeek / Grok / Kimi / Qwen / Mistral / OpenRouter）+ 本地 Ollama', '部署：Docker Compose', '协议：AGPL-3.0'],
+    repo: 'https://github.com/Schlaflied/clearcover',
+  },
+  {
+    number: '03',
+    title: 'Cogito',
+    desc: '跑在自己文字语料上的跨领域语义分析工具。素材是两年多来Obsidian里每两分钟自动提交一次的笔记——不是刻意写的日记，是顺手留下的行为记录，被拿来做聚类分析，找那些连自己都没意识到的重复模式。已公开发布的去标识化结果证明：记录密度够高的话，不到一年也能跑出身份级别的发现，不需要写很多年日记才算数。',
+    stack: ['语言：Python', 'Git 提取：GitPython', 'Embedding：OpenAI', '降维 / 聚类：UMAP + scikit-learn（KMeans）', '可视化：Plotly', '图分析：NetworkX', '中文分词：jieba'],
+    repo: 'https://github.com/Schlaflied/Cogito',
+  },
+] : [
+  {
+    number: '01',
+    title: 'Plot Ark',
+    desc: 'An education project still moving under its own weight. It is trying to answer one question: can you spot where a student is actually stuck — a missed concept, a language barrier, or the wrong way in — before they give up on themselves? This page will fill in as the project moves, not before.',
+    stack: ['Frontend: React + TypeScript + Vite', 'Backend: Python + Flask Blueprints', 'AI: OpenAI GPT-4o / Google Gemini', 'Knowledge graph: LightRAG + networkx + react-force-graph-2d', 'Database: PostgreSQL', 'Cache: Redis', 'Behavior data: xAPI 1.0.3 + mini-LRS', 'Analytics engine: A2A multi-agent (Hive-style)', 'Report export: ReportLab + python-docx + openpyxl + matplotlib', 'Curriculum export: IMS Common Cartridge', 'Dev: Docker Compose'],
+    repo: 'https://github.com/Schlaflied/Plot-Ark',
+  },
+  {
+    number: '02',
+    title: 'ClearCover',
+    desc: "A plain-language insurance policy reader. Upload a policy, get it translated clause by clause — never a purchase recommendation, only clarity. It was born on a July 2026 night spent explaining a Manulife travel-insurance policy to my parents, line by line. It later became my sandbox for practicing AEO / SEO / GEO: a deliberately everyday, easily-searched topic, the opposite of Plot Ark's ambition.",
+    stack: ['Frontend: React + Vite (nginx)', 'Backend: Express (Node) + FastAPI (Python, pdftotext / ocrmypdf)', 'LLM: 10 providers to choose from (Claude / OpenAI / Gemini / DeepSeek / Grok / Kimi / Qwen / Mistral / OpenRouter) + local Ollama', 'Deploy: Docker Compose', 'License: AGPL-3.0'],
+    repo: 'https://github.com/Schlaflied/clearcover',
+  },
+  {
+    number: '03',
+    title: 'Cogito',
+    desc: "A cross-domain semantic-clustering tool run on my own writing corpus. The material is two-plus years of Obsidian notes auto-committed every two minutes — not a deliberate diary, just a behavioral record left in passing, mined for patterns I hadn't noticed myself. The de-identified findings, already published, show that with enough recording density, under a year is enough to surface identity-level patterns — you don't need years of journaling for it to count.",
+    stack: ['Language: Python', 'Git extraction: GitPython', 'Embedding: OpenAI', 'Dim. reduction / clustering: UMAP + scikit-learn (KMeans)', 'Visualization: Plotly', 'Graph analysis: NetworkX', 'Chinese tokenization: jieba'],
+    repo: 'https://github.com/Schlaflied/Cogito',
+  },
+];
+
+const stackLabel = zh ? '技术栈' : 'Tech Stack';
+const repoLabel = zh ? '在 GitHub 查看 →' : 'View on GitHub →';
+---
+<div class="ep-layout works-ep-layout">
+  <div class="ep-tabs">
+    {projects.map((p, i) => (
+      <button type="button" class={`ep-tab${i === 0 ? ' active' : ''}`} data-ep={i}>{p.number} · {p.title}</button>
+    ))}
+  </div>
+  <div class="ep-panels">
+    {projects.map((p, i) => (
+      <div class={`ep-panel${i === 0 ? ' active' : ''}`} data-ep={i}>
+        <p class="wk-number">{p.number}</p>
+        <h2 class="ep-title">{p.title}</h2>
+        <p class="wk-desc">{p.desc}</p>
+        <p class="wk-stack-label">{stackLabel}</p>
+        <ul class="wk-stack">
+          {p.stack.map((s) => <li>{s}</li>)}
+        </ul>
+        <a class="wk-repo" href={p.repo} target="_blank" rel="noopener">{repoLabel}</a>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .works-ep-layout { margin-top:24px; display:grid; grid-template-columns:230px 1fr; gap:36px; align-items:start; }
+  .works-ep-layout .ep-tabs { display:flex; flex-direction:column; position:sticky; top:24px; }
+  .works-ep-layout .ep-tab { text-align:left; background:none; border:none; border-left:2px solid var(--line); padding:11px 16px; font:inherit; font-size:.93rem; color:var(--muted); cursor:pointer; line-height:1.4; transition:color .18s ease,border-color .18s ease; }
+  .works-ep-layout .ep-tab:hover { color:var(--ink); }
+  .works-ep-layout .ep-tab.active { border-left-color:var(--rose); color:var(--ink); font-weight:500; }
+  .works-ep-layout .ep-panels { min-width:0; }
+  .works-ep-layout .ep-panel { display:none; }
+  .works-ep-layout .ep-panel.active { display:block; }
+  .wk-number { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); letter-spacing:.06em; margin:0; }
+  .works-ep-layout .ep-title { margin:8px 0 16px; font-size:clamp(1.6rem,3vw,2.2rem); line-height:1.25; font-weight:500; }
+  .wk-desc { color:var(--muted); font-size:.98rem; line-height:1.75; margin:0 0 26px; max-width:640px; }
+  .wk-stack-label { font:.68rem ui-monospace,SFMono-Regular,monospace; color:var(--rose); letter-spacing:.06em; text-transform:uppercase; margin:0 0 10px; }
+  .wk-stack { list-style:none; margin:0 0 26px; padding:0; display:grid; gap:7px; max-width:520px; }
+  .wk-stack li { color:var(--muted); font-size:.9rem; padding-left:14px; position:relative; }
+  .wk-stack li::before { content:'—'; position:absolute; left:0; color:var(--line); }
+  .wk-repo { display:inline-block; color:var(--rose); font-size:.92rem; text-decoration:none; }
+  .wk-repo:hover { text-decoration:underline; }
+  .works-ep-layout .ep-panel.entering { animation: ep-panel-in .52s cubic-bezier(.2,.7,.2,1) both; }
+  @keyframes ep-panel-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+  @media (max-width:760px) { .works-ep-layout { grid-template-columns:1fr; } .works-ep-layout .ep-tabs { flex-direction:row; flex-wrap:wrap; position:static; gap:4px 14px; } .works-ep-layout .ep-tab { border-left:none; border-bottom:2px solid var(--line); padding:6px 2px; } .works-ep-layout .ep-tab.active { border-bottom-color:var(--rose); } }
+  @media (prefers-reduced-motion:reduce) { .works-ep-layout .ep-panel.entering { animation:none; } }
+</style>
+
+<script is:inline>
+  document.addEventListener('click', function (event) {
+    var tab = event.target.closest('.works-ep-layout .ep-tab');
+    if (!tab) return;
+    var layout = tab.closest('.works-ep-layout');
+    var tabs = layout.querySelectorAll('.ep-tab');
+    var panels = layout.querySelectorAll('.ep-panel');
+    tabs.forEach(function (t) { t.classList.remove('active'); });
+    panels.forEach(function (p) { p.classList.remove('active', 'entering'); });
+    tab.classList.add('active');
+    var panel = layout.querySelector('.ep-panel[data-ep="' + tab.dataset.ep + '"]');
+    if (!panel) return;
+    panel.classList.add('active');
+    window.requestAnimationFrame(function () { panel.classList.add('entering'); });
+  });
+</script>
