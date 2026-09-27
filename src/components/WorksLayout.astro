@@ -26,6 +26,13 @@ const projects: ProjectData[] = zh ? [
     stack: ['语言：Python', 'Git 提取：GitPython', 'Embedding：OpenAI', '降维 / 聚类：UMAP + scikit-learn（KMeans）', '可视化：Plotly', '图分析：NetworkX', '中文分词：jieba'],
     repo: 'https://github.com/Schlaflied/Cogito',
   },
+  {
+    number: '04',
+    title: 'Excel Ops',
+    desc: '给AI agent用的表格整理流水线，不是网页工具，也不是公式生成器。把文件和想要的结果说清楚，agent自己规划操作、挑连接器、把没把握的记录挑出来交给人复核、验证、再交付——ingest → extract → normalize → match → 人工复核 → write → verify → deliver。设计来自一个真实的、反复发生的报表核对工作：每周手动核对好几个来源、格式不一致的记录。司法辖区合规检测那套判断力和更新完整性校验，都是从career-ops带过来的同一套设计思路。',
+    stack: ['语言：Python 3.11+', '核心库：openpyxl + pypdf', 'Agent 入口：Agent Skills 标准（$excel-agent）', 'MCP：本地 stdio server（excel-ops-mcp）', '连接器：本地 XLSX/CSV、云同步文件夹、Google Sheets、Dropbox、飞书表格、WPS 表格', '协议：MIT'],
+    repo: 'https://github.com/Schlaflied/excel-ops',
+  },
 ] : [
   {
     number: '01',
@@ -47,6 +54,13 @@ const projects: ProjectData[] = zh ? [
     desc: "A cross-domain semantic-clustering tool run on my own writing corpus. The material is two-plus years of Obsidian notes auto-committed every two minutes — not a deliberate diary, just a behavioral record left in passing, mined for patterns I hadn't noticed myself. The de-identified findings, already published, show that with enough recording density, under a year is enough to surface identity-level patterns — you don't need years of journaling for it to count.",
     stack: ['Language: Python', 'Git extraction: GitPython', 'Embedding: OpenAI', 'Dim. reduction / clustering: UMAP + scikit-learn (KMeans)', 'Visualization: Plotly', 'Graph analysis: NetworkX', 'Chinese tokenization: jieba'],
     repo: 'https://github.com/Schlaflied/Cogito',
+  },
+  {
+    number: '04',
+    title: 'Excel Ops',
+    desc: "A conversation-driven spreadsheet workflow for AI agents — not a web app, not a formula generator. Give it the files and the outcome in plain language; the agent plans the operation, picks a connector, isolates whatever it isn't sure about for human review, verifies, then delivers — ingest → extract → normalize → match → human review → write → verify → deliver. Grown out of a real, recurring reporting workflow: reconciling messy, multi-source records by hand, week after week. The same judgment behind career-ops's jurisdiction-compliance design and update-integrity checks carries over here.",
+    stack: ['Language: Python 3.11+', 'Core libs: openpyxl + pypdf', 'Agent entry point: Agent Skills standard ($excel-agent)', 'MCP: local stdio server (excel-ops-mcp)', 'Connectors: local XLSX/CSV, cloud-sync folders, Google Sheets, Dropbox, Feishu Sheets, WPS Sheets', 'License: MIT'],
+    repo: 'https://github.com/Schlaflied/excel-ops',
   },
 ];
 
