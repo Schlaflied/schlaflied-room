@@ -13,7 +13,7 @@ const cases: CaseData[] = zh ? [
     tracks: [{ nodes: [
       { time: '2025年10月中', title: '提交申请', desc: '房东未经同意乱扣钱，向房东与租客委员会（LTB）提交申请。', status: 'done' },
       { time: '2026年2月底', title: '第一次开庭', desc: '首次听证，和解未成。', status: 'done' },
-      { time: '2026年9月中', title: '正式开庭', desc: '进入正式审理阶段。', status: 'open' },
+      { time: '2026年9月中', title: '正式开庭延期', desc: '因对方休假，9月未能开庭，新日期尚未确定，可能顺延至明年。', status: 'open' },
     ]}],
   },
   {
@@ -45,7 +45,8 @@ const cases: CaseData[] = zh ? [
       ]},
       { label: 'Small Claims 索赔', nodes: [
         { time: '2026年8月底', title: '提交索赔', desc: '正式向法院提交小额索赔申请。', status: 'done' },
-        { time: '同期', title: '等待审理', desc: '案件进入等待审理阶段。', status: 'open' },
+        { time: '2026年10月', title: '法院受理', desc: '索赔经法院审核后受理，案件进入后续程序。', status: 'done' },
+        { time: '同期', title: '等待后续程序', desc: '等待对方回应及后续安排。', status: 'open' },
       ]},
     ],
   },
@@ -56,7 +57,7 @@ const cases: CaseData[] = zh ? [
     tracks: [{ nodes: [
       { time: 'Mid Oct 2025', title: 'Application filed', desc: 'Filed with the Landlord and Tenant Board after unauthorized deductions from a deposit.', status: 'done' },
       { time: 'Late Feb 2026', title: 'First hearing', desc: 'First hearing; settlement attempt failed.', status: 'done' },
-      { time: 'Mid Sep 2026', title: 'Formal hearing', desc: 'Case moves into formal hearing.', status: 'open' },
+      { time: 'Mid Sep 2026', title: 'Formal hearing postponed', desc: 'The September hearing did not go ahead because the other side was on vacation; no new date yet, likely next year.', status: 'open' },
     ]}],
   },
   {
@@ -88,7 +89,8 @@ const cases: CaseData[] = zh ? [
       ]},
       { label: 'Small Claims', nodes: [
         { time: 'Late Aug 2026', title: 'Claim filed', desc: 'Formally filed a small claims court claim.', status: 'done' },
-        { time: 'Same period', title: 'Awaiting hearing', desc: 'Case is now waiting to be heard.', status: 'open' },
+        { time: 'Oct 2026', title: 'Claim accepted', desc: 'The court reviewed and accepted the claim; the case has moved into the next stage.', status: 'done' },
+        { time: 'Same period', title: 'Awaiting next steps', desc: 'Waiting for the other side to respond and for further scheduling.', status: 'open' },
       ]},
     ],
   },
